@@ -30,6 +30,7 @@
   * 离散值：[0, 1024) 的整数序列，移动到范围 [33024, 34048)
 
 mu-law：
+
 $$
 F(x)=\operatorname{sgn}(x) \frac{\log (|x| \mu+1.0)}{\log (M \mu+1.0)}
 $$
@@ -37,13 +38,13 @@ $$
 ### Embedding
 使用参数化的 embedding 层来对每一个 token 进行嵌入，来生成最后的模型输入。embedding 层根据 token 模态的不同执行不同的操作：
 * 文本、离散或连续观测、行动先通过一个查找表嵌入到可以学习的向量嵌入空间中，同时加上其时间步内不同顺序决定的可学习的位置编码.
-  $$
+  $
   f(\cdot ; \theta)=\text { LookupTable }+\text { LocalPositionEncodings }
-  $$
+  $
 * 图像块通过 ResNet block 来获得嵌入的向量，同时加上可学习的位置编码.
-  $$
+  $
   f(\cdot ; \theta)=\text { ResNet }+\text { PatchPositionEncodings }
-  $$
+  $
 
 #### Value Embedding
 对文本、离散或连续观测、行动数据，构建大小为 32000+1024+1024+1 的查找表
@@ -79,10 +80,11 @@ ResNet 块的结构为：
     * 文本嵌入 token $y_{1: k}$ 
     * 图像块嵌入 token $x_{1: m}$
     * 张量（离散和连续观测）嵌入 token $z_{1: n}$ 
-  * 分隔符：$'|'$ 放在观测后、行动前的分割嵌入 token
+  * 分隔符：'|' 放在观测后、行动前的分割嵌入 token
   * 行动： $a_{1: A}$ 连续或离散值动作的嵌入 token
 
 Token 的完整序列被给出为来自 T 个时间步长的数据的串联：
+
 $$
 s_{1: L}=\left[\left[y_{1: k}^1, x_{1: m}^1, z_{1: n}^1,\left.\right|^{\prime}, a_{1: A}^1\right], \ldots,\left[y_{1: k}^T, x_{1: m}^T, z_{1: n}^T,\left.\right|^{\prime}, a_{1: A}^T\right]\right],
 $$
