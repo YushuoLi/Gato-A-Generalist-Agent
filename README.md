@@ -38,13 +38,15 @@ $$
 ### Embedding
 使用参数化的 embedding 层来对每一个 token 进行嵌入，来生成最后的模型输入。embedding 层根据 token 模态的不同执行不同的操作：
 * 文本、离散或连续观测、行动先通过一个查找表嵌入到可以学习的向量嵌入空间中，同时加上其时间步内不同顺序决定的可学习的位置编码.
-  $
+  
+  $$
   f(\cdot ; \theta)=\text { LookupTable }+\text { LocalPositionEncodings }
-  $
+  $$
 * 图像块通过 ResNet block 来获得嵌入的向量，同时加上可学习的位置编码.
-  $
+
+  $$
   f(\cdot ; \theta)=\text { ResNet }+\text { PatchPositionEncodings }
-  $
+  $$
 
 #### Value Embedding
 对文本、离散或连续观测、行动数据，构建大小为 32000+1024+1024+1 的查找表
